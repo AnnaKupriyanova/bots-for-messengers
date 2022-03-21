@@ -1,0 +1,15 @@
+import telebot
+a = telebot.TeleBot("5144576274:AAGh46MGS159YUeGX8H18uZ8koPboBNeg5Y")
+@a.message_handler(commands=['start'])
+def sendYourMessage(message):
+  mid = message.chat.id;
+  a.send_message(mid, "Скажи что-нибудь")
+@a.message_handler(content_types=['text'])
+def getYourMessage(message):
+  mid = message.chat.id;
+  a.send_message(mid, "Не слышу")
+@a.message_handler(content_types=['voice'])
+def getYourMessage(message):
+  mid = message.chat.id;
+  a.send_message(mid, "Слышу")
+a.polling(non_stop=True)
