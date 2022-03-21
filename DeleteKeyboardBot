@@ -1,0 +1,20 @@
+import telebot
+from telebot import types
+a = telebot.TeleBot("5204071671:AAHGR4bK1BmAiPaZTwIRxNVhXsE5r8Urkzw")
+keyboard_test = telebot.types.ReplyKeyboardMarkup(True)
+keyboard_test.row("Кнопка")
+@a.message_handler(commands=['start'])
+def startWork(message):
+  tid = message.chat.id
+  a.send_message(tid, "start work", reply_markup = keyboard_test)
+@a.message_handler(content_types=['text'])
+def sendYourMessage(message):
+  mid = message.chat.id
+  if message.text == "Кнопка":
+    a.send_message(mid, "Не делай этого, Ксюша разозлится")
+  elif message.text =="Удалить":
+    a.send_message(mid, "Происходит удаление клавиатуры",     
+    reply_markup=types.ReplyKeyboardRemove())
+  else:
+    a.send_message(mid, "Ошибка")
+a.polling(none_stop=True)
