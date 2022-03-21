@@ -1,0 +1,13 @@
+import telebot
+from telebot import types
+a = telebot.TeleBot("5237435317:AAEHsp-YW6X6_XLXTDlXt5dkDhZQHa8GMu0")
+@a.message_handler(commands=['start'])
+def sendYourMessage(message):
+  mid = message.chat.id
+  a.send_message(mid, "Привет:)")
+  a.send_message(mid, "Напиши что-нибудь")
+@a.message_handler(content_types=['text'])
+def getYourMessage(message):
+  mid = message.chat.id
+  a.send_message(mid, "Ты написал {}? Прикольно".format(message.text))
+a.polling(none_stop=True)
