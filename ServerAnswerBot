@@ -1,1 +1,19 @@
-1
+import telebot, requests
+
+bot = telebot.TeleBot("5252823974:AAGe9wWF82ZHfVO3XVTb7RPVYY8GhL0Bo0I")
+
+@bot.message_handler(commands = ["start"])
+
+@bot.message_handler(content_types = ["text"])
+def serverAnswer(message):
+  mid = message.chat.id
+  if message.text == "/start":
+    request = requests.get("https://reqres.in/api/users/2")
+    if request.status_code == 200: #статус успешного выполнения
+      data = request.json()["data"] #обмен инфой
+      message = F"Информация о пользователе:\n\nID - {data['id']}\nEmail - {data['email']}\nИмя - {data['first_name']}\nФамилия - {data['last_name']}\n\n<a href='{data['avatar']}'>Аватар</a>"
+      bot.send_message(mid , message, parse_mode = "HTML")
+    else:
+      bot.send_message(mid , "Сервер вернул ошибку!")
+
+bot.polling(none_stop = True)
